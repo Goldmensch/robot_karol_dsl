@@ -80,6 +80,10 @@ public class RobotKarolUtils {
         predefinedConditions.put(new PredefinedKey("isNorth"), "IstNorden");
         predefinedConditions.put(new PredefinedKey("isWest"), "IstWesten");
         predefinedConditions.put(new PredefinedKey("isEast"), "IstOsten");
+        predefinedConditions.put(new PredefinedKey("isFull"), "IstVoll");
+        predefinedConditions.put(new PredefinedKey("isEmpty"), "IstLeer");
+        predefinedConditions.put(new PredefinedKey("hasBrick"), "HatZiegel");
+        predefinedConditions.put(new PredefinedKey("hasBrick", List.of(TokenType.NUMBER)), "HatZiegel");
     }
 
     public static boolean isRobotKarolReserved(String word) {
