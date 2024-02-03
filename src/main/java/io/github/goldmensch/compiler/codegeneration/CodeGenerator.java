@@ -36,7 +36,7 @@ public class CodeGenerator {
             case TopLevelConstruct.Condition(String id, Statement.Block block, var __) ->
                     writeMethod("bedingung", id, block);
 
-            case Statement.Block block -> block.statements().forEach(this::generate);
+            case Statement.Block block -> writeBlock(block);
             case Statement.FuncCall(String identifier, Token arg, var __) ->
                     writeCall(RobotKarolUtils.translateFunction(identifier), arg);
             case Statement.Return(Expression expr, var __) -> writeReturn(expr);
@@ -57,12 +57,19 @@ public class CodeGenerator {
         }
     }
 
+    private void writeBlock(Statement.Block block) {
+        for (Statement statement : block.statements()) {
+            generate(statement);
+            writer.append(Writer.BREAK);
+        }
+    }
+
     private void writeFast(Statement.Block block) {
         if (!fast) {
-            writer.append("schnell");
+            writer.append("schnell", Writer.BREAK);
             fast = true;
 
-            generate(block);
+            writer.appendSection(() -> generate(block));
 
             writer.append("langsam");
             fast = false;
@@ -103,20 +110,20 @@ public class CodeGenerator {
     }
 
     private void writeWhile(Expression cond, Statement.Block block) {
-        writer.append("wiederhole", "solange", writeExpressionExtern(cond));
-        generate(block);
+        writer.append("wiederhole", "solange", writeExpressionExtern(cond), Writer.BREAK);
+        writer.appendSection(() -> generate(block));
         writer.append("endeWiederhole");
     }
 
     private void writeDoWhile(Expression cond, Statement.Block block) {
-        writer.append("wiederhole");
-        generate(block);
+        writer.append("wiederhole", Writer.BREAK);
+        writer.appendSection(() -> generate(block));
         writer.append("endeWiederhole", "solange", writeExpressionExtern(cond));
     }
 
     private void writeTimes(int number, Statement.Block block) {
-        writer.append("wiederhole", String.valueOf(number), "mal");
-        generate(block);
+        writer.append("wiederhole", String.valueOf(number), "mal", Writer.BREAK);
+        writer.appendSection(() -> generate(block));
         writer.append("endeWiederhole");
     }
 
@@ -124,8 +131,8 @@ public class CodeGenerator {
         String condId = "cond__" + UUID.randomUUID().toString().replace("-", "");
         var oldWriter = writer;
         writer = new Writer();
-        writer.append("bedingung", condId);
-        writeReturn(expression);
+        writer.append("bedingung", condId, Writer.BREAK);
+        writer.appendSection(() -> writeReturn(expression));
         writer.append("endeBedingung");
         oldWriter.addExtraOnTop(writer.code());
         writer = oldWriter;
@@ -139,7 +146,7 @@ public class CodeGenerator {
     }
 
     private void writeReturn(Expression expression) {
-        expression(expression, () -> writer.append("wahr"), () -> writer.append("falsch"), Set.of(ExprTag.NEW_IF));
+        expression(expression, () -> writer.append("wahr", Writer.BREAK), () -> writer.append("falsch", Writer.BREAK), Set.of(ExprTag.NEW_IF));
     }
 
     private void expression(Expression expression, final Runnable thenRn, final Runnable elseRn, Set<ExprTag> tags) {
@@ -189,11 +196,11 @@ public class CodeGenerator {
         }
         if (shouldTagGen(expression)) {
             if (tags.contains(ExprTag.NEW_IF)) {
-                writer.append("dann");
-                thenRn.run();
-                writer.append("sonst");
-                elseRn.run();
-                writer.append("endeWenn");
+                writer.append("dann", Writer.BREAK);
+                writer.appendSection(thenRn);
+                writer.append("sonst", Writer.BREAK);
+                writer.appendSection(elseRn);
+                writer.append("endeWenn", Writer.BREAK);
             }
         }
     }
@@ -231,8 +238,10 @@ public class CodeGenerator {
         Writer oldWriter = writer;
         writer = new Writer();
 
-        writer.append(type, identifier);
+        writer.append(type, identifier, Writer.BREAK);
+        writer.addDepth();
         generate(block);
+        writer.subDepth();
         writer.append("ende" + type);
 
         oldWriter.append(writer.code());

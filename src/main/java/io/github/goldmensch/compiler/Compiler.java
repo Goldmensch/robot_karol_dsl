@@ -39,6 +39,7 @@ public class Compiler implements ErrorHandler {
             Path destPath = Path.of(filePath.getFileName() + ".kdp");
             Files.deleteIfExists(destPath);
             Files.writeString(destPath, generatedCode, StandardOpenOption.CREATE_NEW);
+            System.out.printf("Generated %s%n", destPath);
         }
     }
 

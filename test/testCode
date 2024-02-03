@@ -1,0 +1,14 @@
+fun pfeilerSetzen {
+    if isBrick() {
+        pickBrick()
+        pfeilerSetzen()
+    } else {
+        2 times { turnLeft() }
+    }
+    putBrick()
+}
+
+main {
+    pfeilerSetzen()
+    pickBrick()
+}

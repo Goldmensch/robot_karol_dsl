@@ -1,6 +1,6 @@
 plugins {
     id("java")
-}
+ }
 
 group = "io.github.goldmensch"
 version = "1.0-SNAPSHOT"
@@ -20,8 +20,10 @@ java {
     }
 }
 
-
-
-tasks.test {
-    useJUnitPlatform()
+tasks.jar {
+    manifest {
+        attributes(
+                "Main-Class" to "io.github.goldmensch.compiler.Compiler"
+        )
+    }
 }

@@ -84,7 +84,7 @@ public abstract class SubParser<T> {
 
         var wrapped = Arrays.stream(types)
                 .map(obj -> obj instanceof TokenType type
-                        ? "'" + type.representation() + "'"
+                        ? "'" + type + "'"
                         : obj.toString()
                 )
                 .toArray();

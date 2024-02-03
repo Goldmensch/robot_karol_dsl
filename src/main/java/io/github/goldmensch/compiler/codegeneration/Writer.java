@@ -11,10 +11,26 @@ public class Writer {
 
     private final List<String> extraOnTop = new ArrayList<>();
 
-    private final int depth = 0;
+    public static final int INSERTION = 2;
+
+    private int depth = 0;
 
     public void addExtraOnTop(String s) {
         extraOnTop.add(s);
+    }
+
+    public void addDepth() {
+        depth += INSERTION;
+    }
+
+    public void subDepth() {
+        depth -= INSERTION;
+    }
+
+    public void appendSection(Runnable runnable) {
+        addDepth();
+        runnable.run();
+        subDepth();
     }
 
     public String code() {
@@ -27,8 +43,13 @@ public class Writer {
 
     public void append(String... strings) {
         for (String string : strings) {
-            builder.append(SPACE);
+            if (!builder.isEmpty() && builder.charAt(builder.length() - 1) == '\n') {
+                builder.append(" ".repeat(depth));
+            }
             builder.append(string);
+            if (!string.equals(BREAK)) {
+                builder.append(SPACE);
+            }
         }
     }
 

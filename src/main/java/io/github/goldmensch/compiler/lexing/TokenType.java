@@ -64,7 +64,8 @@ public enum TokenType {
         return KEYWORDS.containsValue(type);
     }
 
-    public String representation() {
+    @Override
+    public String toString() {
         return representation;
     }
 }
