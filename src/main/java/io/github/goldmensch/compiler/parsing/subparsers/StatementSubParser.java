@@ -29,8 +29,14 @@ public class StatementSubParser extends SubParser<Statement> {
             case TEST -> test();
             case TRY -> tryStmt();
             case LEFT_BRACE -> block();
+            case FAST -> fast();
             default -> throw expectedError("statement");
         };
+    }
+
+    private Statement fast() {
+        Token fastId = consume(TokenType.FAST);
+        return new Statement.Fast(block(), new Position(fastId));
     }
 
     Statement.FuncCall funcCall() {

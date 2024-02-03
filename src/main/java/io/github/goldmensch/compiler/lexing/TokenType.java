@@ -19,6 +19,8 @@ public enum TokenType {
 
     ARROW("->"),
 
+    FAST("fast"),
+
     EOF("end of file");
 
     private static final Map<String, TokenType> KEYWORDS = new HashMap<>();
@@ -45,6 +47,7 @@ public enum TokenType {
         KEYWORDS.put("return", RETURN);
         KEYWORDS.put("true", TRUE);
         KEYWORDS.put("false", FALSE);
+        KEYWORDS.put("fast", FAST);
     }
 
     private final String representation;

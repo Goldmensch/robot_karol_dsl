@@ -11,6 +11,7 @@ public class CodeGenerator {
     private final AstRoot ast;
 
     private Writer writer = new Writer();
+    private boolean fast = false;
 
     public CodeGenerator(AstRoot ast) {
         this.ast = ast;
@@ -53,6 +54,21 @@ public class CodeGenerator {
                     writeTry(conditions, statements);
             case Expression __ ->
                     throw new IllegalArgumentException("expression not supported in root node generation");
+            case Statement.Fast(Statement.Block block, var __) -> writeFast(block);
+        }
+    }
+
+    private void writeFast(Statement.Block block) {
+        if (!fast) {
+            writer.append("schnell");
+            fast = true;
+
+            generate(block);
+
+            writer.append("langsam");
+            fast = false;
+        } else {
+            generate(block);
         }
     }
 

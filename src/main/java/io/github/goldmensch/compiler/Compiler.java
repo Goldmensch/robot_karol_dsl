@@ -20,71 +20,70 @@ public class Compiler implements ErrorHandler {
 
     public static void main(String[] args) {
         String text = """
-                fun baueBecken {
-                    12 times {
-                        while !isWall() {
-                            putBrick()
-                            step()
-                        }
-                        turnLeft()
-                    }
-                }
+                 fun fast baueBecken {
+                     12 times {
+                         while !isWall() {
+                             putBrick()
+                             step()
+                         }
+                         turnLeft()
+                     }
+                 }
                 
-                fun abbauenBecken {
-                    12 times {
-                        while !isWall() {
-                            pickBrick()
-                            step()
-                        }
-                        turnRight()
-                    }
-                }
+                 fun fast abbauenBecken {
+                     12 times {
+                         while !isWall() {
+                             pickBrick()
+                             step()
+                         }
+                         turnRight()
+                     }
+                 }
                 
-                fun umdrehen {
-                    turnLeft()
-                    turnLeft()
-                }
+                 fun umdrehen {
+                     turnLeft()
+                     turnLeft()
+                 }
                 
-                fun schwimmen {
-                    3 times { putBrick() }
-                    step()
-                    while !isBrick() {
-                        3 times { putBrick() }
-                        step()
-                        umdrehen()
-                        3 times { pickBrick() }
-                        umdrehen()
-                    }
-                    step()
-                    umdrehen()
-                    3 times { pickBrick() }
-                    umdrehen()
-                }
+                 fun schwimmen {
+                     3 times { putBrick() }
+                     step()
+                     while !isBrick() {
+                         3 times { putBrick() }
+                         step()
+                         umdrehen()
+                         3 times { pickBrick() }
+                         umdrehen()
+                     }
+                     step()
+                     umdrehen()
+                     3 times { pickBrick() }
+                     umdrehen()
+                 }
                 
-                fun hauptteil {
-                    baueBecken()
-                    turnLeft()
-                    2 times { step() }
-                    turnRight()
-                    schwimmen()
-                    turnRight()
-                    2 times { step() }
-                    turnRight()
+                 fun hauptteil {
+                     baueBecken()
+                     turnLeft()
+                     2 times { step() }
+                     turnRight()
+                     schwimmen()
+                     turnRight()
+                     2 times { step() }
+                     turnRight()
                     
-                    abbauenBecken()
-                    
-                    while !isWall() {
-                        step()
-                    }
-                    turnLeft() turnLeft()
-                }
+                     abbauenBecken()
+                   
+                     while !isWall() {
+                         step()
+                     }
+                     turnLeft() turnLeft()
+                 }
                 
-                main {
-                    4 times {
-                        hauptteil()
-                    }
-                }
-                        
+                 main {
+                     4 times {
+                         hauptteil()
+                     }
+                 }
                 """;
         var compiler = new Compiler(text);
         compiler.compile();
