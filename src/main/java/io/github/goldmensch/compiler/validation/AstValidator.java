@@ -21,7 +21,8 @@ public class AstValidator {
             new OnlyOneDefaultArm(),
             new CannotCallUnknownMethod(),
             new ConditionCallsItself(),
-            new DefaultArmMustBeLast()
+            new DefaultArmMustBeLast(),
+            new IllegalCondFuncName()
     );
 
     public AstValidator(AstRoot ast, ErrorHandler errors) {

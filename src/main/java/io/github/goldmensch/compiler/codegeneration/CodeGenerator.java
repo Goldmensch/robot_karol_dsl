@@ -1,6 +1,5 @@
 package io.github.goldmensch.compiler.codegeneration;
 
-import io.github.goldmensch.compiler.ErrorHandler;
 import io.github.goldmensch.compiler.ast.*;
 import io.github.goldmensch.compiler.lexing.Token;
 import io.github.goldmensch.compiler.lexing.TokenType;

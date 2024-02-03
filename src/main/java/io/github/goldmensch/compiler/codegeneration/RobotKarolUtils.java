@@ -8,11 +8,47 @@ import io.github.goldmensch.compiler.lexing.TokenType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class RobotKarolUtils {
     public static final List<TokenType> SOME_COLOR = List.of(TokenType.RED, TokenType.BLUE, TokenType.GREEN, TokenType.YELLOW);
     private static final Map<PredefinedKey, String> predefinedFunctions = new HashMap<>();
     private static final Map<PredefinedKey, String> predefinedConditions = new HashMap<>();
+
+    private static final Set<String> robotKarolKeyword = Set.of(
+                    "anweisung",
+                    "endeAnweisung",
+                    "*Anweisung",
+                    "wiederhole",
+                    "solange",
+                    "endeWiederhole",
+                    "*Wiederhole",
+                    "method",
+                    "endeMethode",
+                    "*method",
+                    "bedingung",
+                    "endeBedingung",
+                    "*bedingung",
+                    "wahr",
+                    "falsch",
+                    "wenn",
+                    "endeWenn",
+                    "*wenn",
+                    "dann",
+                    "langsam",
+                    "schnell",
+                    "nicht",
+                    "sonst",
+                    "mal",
+                    "bis",
+                    "einfügen",
+                    "endeEinfügen",
+                    "*einfügen"
+            ).stream()
+            .map(String::toLowerCase)
+            .collect(Collectors.toSet());
 
     static {
         // predefined functions
@@ -44,6 +80,17 @@ public class RobotKarolUtils {
         predefinedConditions.put(new PredefinedKey("isNorth"), "IstNorden");
         predefinedConditions.put(new PredefinedKey("isWest"), "IstWesten");
         predefinedConditions.put(new PredefinedKey("isEast"), "IstOsten");
+    }
+
+    public static boolean isRobotKarolReserved(String word) {
+        var notConditionsStream = predefinedConditions.values()
+                .stream()
+                .map("nicht"::concat);
+        var completeConditionsStream = Stream.concat(predefinedConditions.values().stream(), notConditionsStream);
+
+        return robotKarolKeyword.contains(word.toLowerCase()) || Stream.concat(completeConditionsStream, predefinedFunctions.values().stream())
+                .anyMatch(word::equalsIgnoreCase);
+
     }
 
     public static String translateFunction(String id) {

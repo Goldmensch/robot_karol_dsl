@@ -6,6 +6,10 @@ import io.github.goldmensch.compiler.lexing.Token;
 import io.github.goldmensch.compiler.parsing.Parser;
 import io.github.goldmensch.compiler.validation.AstValidator;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class Compiler implements ErrorHandler {
@@ -18,99 +22,47 @@ public class Compiler implements ErrorHandler {
         this.source = source;
     }
 
-    public static void main(String[] args) {
-        String text = """
-                 fun fast baueBecken {
-                     12 times {
-                         while !isWall() {
-                             putBrick()
-                             step()
-                         }
-                         turnLeft()
-                     }
-                 }
-                
-                 fun fast abbauenBecken {
-                     12 times {
-                         while !isWall() {
-                             pickBrick()
-                             step()
-                         }
-                         turnRight()
-                     }
-                 }
-                
-                 fun umdrehen {
-                     turnLeft()
-                     turnLeft()
-                 }
-                
-                 fun schwimmen {
-                     3 times { putBrick() }
-                     step()
-                     while !isBrick() {
-                         3 times { putBrick() }
-                         step()
-                         umdrehen()
-                         3 times { pickBrick() }
-                         umdrehen()
-                     }
-                     step()
-                     umdrehen()
-                     3 times { pickBrick() }
-                     umdrehen()
-                 }
-                
-                 fun hauptteil {
-                     baueBecken()
-                     turnLeft()
-                     2 times { step() }
-                     turnRight()
-                     schwimmen()
-                     turnRight()
-                     2 times { step() }
-                     turnRight()
-                    
-                     abbauenBecken()
-                   
-                     while !isWall() {
-                         step()
-                     }
-                     turnLeft() turnLeft()
-                 }
-                
-                 main {
-                     4 times {
-                         hauptteil()
-                     }
-                 }
-                """;
+    public static void main(String[] args) throws IOException {
+        if (args.length < 1) {
+            System.err.println("No input file provided!");
+            return;
+        }
+        Path filePath = Path.of(args[0]);
+        String text = Files.readString(filePath);
+
         var compiler = new Compiler(text);
-        compiler.compile();
+        String generatedCode = compiler.compile();
+
+        if (args.length == 2 && args[1].equals("-c")) {
+            System.out.println(generatedCode);
+        } else {
+            Path destPath = Path.of(filePath.getFileName() + ".kdp");
+            Files.deleteIfExists(destPath);
+            Files.writeString(destPath, generatedCode, StandardOpenOption.CREATE_NEW);
+        }
     }
 
-    private void runStages() {
+    private String runStages() {
         var scanner = new Scanner(source, this);
         List<Token> tokens = scanner.scanTokens();
-        if (error) return;
+        if (error) return null;
 
         var parser = new Parser(tokens, this);
         var ast = parser.parse();
-        if (error) return;
+        if (error) return null;
 
         var validator = new AstValidator(ast, this);
         validator.validate();
-        if (error) return;
+        if (error) return null;
 
         var codeGenerator = new CodeGenerator(ast);
-        String generatedCode = codeGenerator.generate();
-        if (error) return;
-        System.out.println(generatedCode);
+        return codeGenerator.generate();
     }
 
-    public void compile() {
-        runStages();
-        if (error) System.exit(64);
+    public String compile() {
+        String generatedCode = runStages();
+        if (error || generatedCode == null) System.exit(64);
+        return generatedCode;
     }
 
     @Override
