@@ -54,6 +54,15 @@ public class CodeGenerator {
             case Expression __ ->
                     throw new IllegalArgumentException("expression not supported in root node generation");
             case Statement.Fast(Statement.Block block, var __) -> writeFast(block);
+            case Statement.Slow(Statement.Block block, var __) -> writeSlow(block);
+        }
+    }
+
+    private void writeSlow(Statement.Block block) {
+        writer.append("langsam", Writer.BREAK);
+        writer.appendSection(() -> generate(block));
+        if (fast) {
+            writer.append("schnell");
         }
     }
 
@@ -244,7 +253,7 @@ public class CodeGenerator {
         writer.subDepth();
         writer.append("ende" + type);
 
-        oldWriter.append(writer.code());
+        oldWriter.append(writer.code(), Writer.BREAK);
         writer = oldWriter;
     }
 

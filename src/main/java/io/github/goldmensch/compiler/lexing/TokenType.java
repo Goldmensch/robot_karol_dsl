@@ -19,7 +19,7 @@ public enum TokenType {
 
     ARROW("->"),
 
-    FAST("fast"),
+    FAST("fast"), SLOW("slow"),
 
     EOF("end of file");
 
@@ -48,6 +48,7 @@ public enum TokenType {
         KEYWORDS.put("true", TRUE);
         KEYWORDS.put("false", FALSE);
         KEYWORDS.put("fast", FAST);
+        KEYWORDS.put("slow", SLOW);
     }
 
     private final String representation;

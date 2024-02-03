@@ -27,32 +27,41 @@ public class TopLevelSubParser extends SubParser<TopLevelConstruct> {
 
     private TopLevelConstruct mainTL() {
         Token token = consume(TokenType.MAIN);
-        boolean fast = match(TokenType.FAST);
+        Token temp = checkAndConsumeTemp();
 
         Statement.Block block = parser().statementParser().block();
 
-        return new TopLevelConstruct.Main(wrapFast(fast, block), new Position(token));
+        return new TopLevelConstruct.Main(wrapTemp(temp, block), new Position(token));
     }
 
     private TopLevelConstruct fun() {
         Token token = consume(TokenType.FUN);
-        boolean fast = match(TokenType.FAST);
+        Token temp = checkAndConsumeTemp();
         consume(TokenType.IDENTIFIER);
 
-        return new TopLevelConstruct.Function(((String) previous().literal()), wrapFast(fast, parser().statementParser().block()), new Position(token));
+        return new TopLevelConstruct.Function(((String) previous().literal()), wrapTemp(temp, parser().statementParser().block()), new Position(token));
     }
 
     private TopLevelConstruct cond() {
         Token token = consume(TokenType.COND);
-        boolean fast = match(TokenType.FAST);
+        Token temp = checkAndConsumeTemp();
         consume(TokenType.IDENTIFIER);
 
-        return new TopLevelConstruct.Condition(((String) previous().literal()), wrapFast(fast, parser().statementParser().block()), new Position(token));
+        return new TopLevelConstruct.Condition(((String) previous().literal()), wrapTemp(temp, parser().statementParser().block()), new Position(token));
     }
 
-    private Statement.Block wrapFast(boolean fast, Statement.Block block) {
-        return fast
-                ? new Statement.Block(List.of(new Statement.Fast(block, null)))
-                : block;
+    private Token checkAndConsumeTemp() {
+        match(TokenType.FAST, TokenType.SLOW);
+        return previous();
+    }
+
+    private Statement.Block wrapTemp(Token check, Statement.Block block) {
+        Statement stmt = switch (check.type()) {
+            case FAST -> new Statement.Fast(block, null);
+            case SLOW -> new Statement.Slow(block, null);
+            default -> null;
+        };
+        if (stmt == null) return block;
+        return new Statement.Block(List.of(stmt));
     }
 }

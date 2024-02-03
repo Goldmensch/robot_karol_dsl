@@ -5,7 +5,7 @@ import io.github.goldmensch.compiler.lexing.Token;
 import java.util.List;
 import java.util.function.BiFunction;
 
-public sealed interface Statement extends Node permits Statement.Block, Statement.DoWhile, Statement.Fast, Statement.FuncCall, Statement.If, Statement.Loop, Statement.Return, Statement.Test, Statement.Times, Statement.Try, Statement.While {
+public sealed interface Statement extends Node permits Statement.Block, Statement.DoWhile, Statement.Fast, Statement.FuncCall, Statement.If, Statement.Loop, Statement.Return, Statement.Slow, Statement.Test, Statement.Times, Statement.Try, Statement.While {
 
     record Return(Expression value, Position position) implements Statement {
         @Override
@@ -103,6 +103,15 @@ public sealed interface Statement extends Node permits Statement.Block, Statemen
 
 
     record Fast(Block block, Position position) implements Statement {
+        @Override
+        public <T> void traverse(T context, BiFunction<Node, T, Boolean> function) {
+            if (function.apply(this, context)) return;
+            block.traverse(context, function);
+        }
+    }
+
+    record Slow(Block block, Position position) implements Statement {
+
         @Override
         public <T> void traverse(T context, BiFunction<Node, T, Boolean> function) {
             if (function.apply(this, context)) return;

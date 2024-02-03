@@ -30,8 +30,14 @@ public class StatementSubParser extends SubParser<Statement> {
             case TRY -> tryStmt();
             case LEFT_BRACE -> block();
             case FAST -> fast();
+            case SLOW -> slow();
             default -> throw expectedError("statement");
         };
+    }
+
+    private Statement slow() {
+        Token slowId = consume(TokenType.SLOW);
+        return new Statement.Slow(block(), new Position(slowId));
     }
 
     private Statement fast() {

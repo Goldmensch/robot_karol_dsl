@@ -43,7 +43,7 @@ fun zweigGehen {
                         turnLeft()
                     }
                     step()
-                    slow { stop() }
+                    stop()
                 } else {
                     fast {
                         schrittRueckwaerts()
