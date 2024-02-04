@@ -21,21 +21,30 @@ public class CannotCallUnknownMethod implements SemanticRule {
                 .toList();
 
         head.traverse(null, (node, o) -> {
+            var methodName = validator.methodName(node);
+            if (methodName == null) return true;
+
+
             if (node instanceof Expression.CondCall condCall) {
                 String identifier = condCall.identifier();
-                if (!RobotKarolUtils.isPredefinedCondition(condCall) && !methods.contains(identifier)) {
+                if (!RobotKarolUtils.isPredefinedCondition(condCall) && !isDefinedBefore(condCall.identifier(), methodName, methods)) {
                     validator.error(node, "Unknown condition called %s(%s)", identifier, formatArg(condCall.argument()));
                 }
             }
 
             if (node instanceof Statement.FuncCall funcCall) {
                 String identifier = funcCall.identifier();
-                if (!RobotKarolUtils.isPredefinedFunction(funcCall) && !methods.contains(identifier)) {
+                if (!RobotKarolUtils.isPredefinedFunction(funcCall) && !isDefinedBefore(funcCall.identifier(), methodName, methods)) {
                     validator.error(node, "Unknown function called %s(%s)", identifier, formatArg(funcCall.argument()));
                 }
             }
             return false;
         });
+    }
+
+    private boolean isDefinedBefore(String name, String currentMethod, List<String> methodNames) {
+        return methodNames.contains(name) && (methodNames.indexOf(name) > methodNames.indexOf(currentMethod));
+
     }
 
     private String formatArg(Token arg) {

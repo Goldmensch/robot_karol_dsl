@@ -7,12 +7,9 @@ public class Writer {
 
     public static final String SPACE = " ";
     public static final String BREAK = "\n";
-    private final StringBuilder builder = new StringBuilder();
-
-    private final List<String> extraOnTop = new ArrayList<>();
-
     public static final int INSERTION = 2;
-
+    private final StringBuilder builder = new StringBuilder();
+    private final List<String> extraOnTop = new ArrayList<>();
     private int depth = 0;
 
     public void addExtraOnTop(String s) {

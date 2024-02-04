@@ -60,7 +60,7 @@ bedingung istZiel
     endeWiederhole 
   langsam 
 endebedingung  
-bedingung cond__eeadedb99fd9419ab7719f6e6a0b3c29 
+bedingung cond__f3b78ab34bf945bc8b8c7c2c5aea388d 
   wenn nicht IstZiegel(1) dann 
     wahr 
   sonst 
@@ -77,7 +77,7 @@ anweisung zweigGehen
         wenn istZiel() dann 
           Warten(2500) 
           Ton() 
-          wiederhole solange cond__eeadedb99fd9419ab7719f6e6a0b3c29 
+          wiederhole solange cond__f3b78ab34bf945bc8b8c7c2c5aea388d 
             LinksDrehen() 
           endeWiederhole 
           Schritt() 
