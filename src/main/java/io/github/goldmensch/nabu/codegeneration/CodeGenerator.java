@@ -47,9 +47,9 @@ public class CodeGenerator {
             case Statement.While(Expression cond, Statement.Block block, var __) -> writeWhile(cond, block);
             case Statement.DoWhile(Statement.Block block, Expression cond, var __) -> writeDoWhile(cond, block);
             case Statement.Times(int number, Statement.Block block, var __) -> writeTimes(number, block);
-            case Statement.Test(String id, List<Token> arguments, List<Statement.Block> statements, var __) ->
-                    writeTest(id, arguments, statements);
-            case Statement.Try(List<Expression> conditions, List<Statement.Block> statements, var __) ->
+            case Statement.Test(String id, List<Token> arguments, List<Statement> statements, List<Expression> withExpressions, var __) ->
+                    writeTest(id, arguments, statements, withExpressions);
+            case Statement.Try(List<Expression> conditions, List<Statement> statements, var __) ->
                     writeTry(conditions, statements);
             case Expression __ ->
                     throw new IllegalArgumentException("expression not supported in root node generation");
@@ -87,32 +87,40 @@ public class CodeGenerator {
         }
     }
 
-    private void writeTest(String id, List<Token> arguments, List<Statement.Block> statements) {
+    private void writeTest(String id, List<Token> arguments, List<Statement> statements, List<Expression> withExpressions) {
         if (arguments.isEmpty()) return;
+
 
         // generate default arm // Expression.DefaultTryArm simply evaluated to "wenn cond__true dann", so it's basically the last else without a condition
         if (arguments.getFirst().type() == TokenType.UNDERSCORE) {
-            expression(new Expression.DefaultTryArm(0), () -> generate(statements.getFirst()), () -> {
+            expression(wrapTestArm(new Expression.DefaultTryArm(0), withExpressions.getFirst()), () -> generate(statements.getFirst()), () -> {
             }, Set.of(ExprTag.NEW_IF));
             return;
         }
 
-        expression(new Expression.CondCall(id, arguments.getFirst(), null), () -> generate(statements.getFirst()), () -> {
-            List<Token> newArguments = new ArrayList<>(arguments);
+        expression(wrapTestArm(new Expression.CondCall(id, arguments.getFirst(), null), withExpressions.getFirst()), () -> generate(statements.getFirst()), () -> {
+            var newArguments = new ArrayList<>(arguments);
             newArguments.removeFirst();
-            List<Statement.Block> newStatements = new ArrayList<>(statements);
+            var newStatements = new ArrayList<>(statements);
             newStatements.removeFirst();
+            var newWithExpressions = new ArrayList<>(withExpressions);
+            newWithExpressions.removeFirst();
 
-            writeTest(id, newArguments, newStatements);
+
+            writeTest(id, newArguments, newStatements, newWithExpressions);
         }, Set.of(ExprTag.NEW_IF));
     }
 
-    private void writeTry(List<Expression> conditions, List<Statement.Block> statements) {
+    private Expression wrapTestArm(Expression left, Expression right) {
+        return new Expression.Binary(left, new Token(TokenType.AMPERSAND, null, null, -1), right);
+    }
+
+    private void writeTry(List<Expression> conditions, List<Statement> statements) {
         if (conditions.isEmpty()) return;
         expression(conditions.getFirst(), () -> generate(statements.getFirst()), () -> {
             List<Expression> newConditions = new ArrayList<>(conditions);
             newConditions.removeFirst();
-            List<Statement.Block> newStatements = new ArrayList<>(statements);
+            var newStatements = new ArrayList<>(statements);
             newStatements.removeFirst();
             writeTry(newConditions, newStatements);
         }, Set.of(ExprTag.NEW_IF));

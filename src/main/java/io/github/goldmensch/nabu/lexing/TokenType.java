@@ -17,7 +17,7 @@ public enum TokenType {
 
     RETURN("return"), TRUE("true"), FALSE("false"),
 
-    ARROW("->"),
+    ARROW("->"), WITH("with"),
 
     FAST("fast"), SLOW("slow"),
 
@@ -49,6 +49,7 @@ public enum TokenType {
         KEYWORDS.put("false", FALSE);
         KEYWORDS.put("fast", FAST);
         KEYWORDS.put("slow", SLOW);
+        KEYWORDS.put("with", WITH);
     }
 
     private final String representation;

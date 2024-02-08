@@ -34,8 +34,7 @@ public sealed interface Expression extends Node permits Expression.Binary, Expre
 
         @Override
         public <T> void traverse(T context, BiFunction<Node, T, Boolean> function) {
-            if (function.apply(this, context)) {
-            }
+            function.apply(this, context);
         }
     }
 
@@ -47,8 +46,7 @@ public sealed interface Expression extends Node permits Expression.Binary, Expre
 
         @Override
         public <T> void traverse(T context, BiFunction<Node, T, Boolean> function) {
-            if (function.apply(this, context)) {
-            }
+            function.apply(this, context);
         }
     }
 
@@ -56,8 +54,7 @@ public sealed interface Expression extends Node permits Expression.Binary, Expre
 
         @Override
         public <T> void traverse(T context, BiFunction<Node, T, Boolean> function) {
-            if (function.apply(this, context)) {
-            }
+            function.apply(this, context);
         }
 
         @Override

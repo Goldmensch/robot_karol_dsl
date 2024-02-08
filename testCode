@@ -1,66 +1,23 @@
-fun umdrehen {
-    turnLeft()
-    turnLeft()
-}
-
-fun schrittRueckwaerts {
-    umdrehen()
-    step()
-    umdrehen()
-}
-
-cond istMarkeVorne {
-    step()
-    return isMark()
-    schrittRueckwaerts()
-}
-
-cond fast istGehenErlaubt {
-    return !isWall() & !isBrick() & !istMarkeVorne()
-}
-
-cond fast istZiel {
-    return false
-    4 times {
-        if isBrick(1) {
-            return true
+main {
+    test isMark(x) {
+        red with true -> step()
+        blue with isWall() -> {
+            2 times { step() }
         }
-        turnLeft()
-    }
-}
-
-fun zweigGehen {
-    setMark()
-    4 times {
-        if istGehenErlaubt() {
-            step()
-            fast {
-                zweigGehen()
-                if istZiel() {
-                    wait(2500)
-                    beep()
-                    while !isBrick(1) {
-                        turnLeft()
-                    }
-                    step()
-                    slow { stop() }
-                } else {
-                    fast {
-                        schrittRueckwaerts()
-                    }
-                }
-            }
+        yellow -> test isBrick(x) {
+            12 -> { setMark(red) }
+            _ -> { step() }
         }
-        fast {
-            turnLeft()
+        _ -> if isWall() {
+            loop { step() }
         }
     }
-}
 
-main fast {
-    zweigGehen()
-    2 times {
-        beep()
-        wait(2000)
+    try {
+        isWall() & isMark() -> step()
+        _ -> try {
+            isWall() -> { 2 times { step() }}
+            _ -> step()
+        }
     }
 }

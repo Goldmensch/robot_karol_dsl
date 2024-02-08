@@ -1,109 +1,256 @@
 bedingung cond__true wahr endeBedingung
 bedingung cond__false falsch endeBedingung
-anweisung umdrehen 
-  LinksDrehen() 
-  LinksDrehen() 
-endeanweisung  
-anweisung schrittRueckwaerts 
-  umdrehen() 
-  Schritt() 
-  umdrehen() 
-endeanweisung  
-bedingung istMarkeVorne 
-  Schritt() 
-  wenn IstMarke() dann 
-    wahr 
-  sonst 
-    falsch 
+programm  
+  wenn IstMarke(rot) dann 
+    wenn cond__true dann 
+      Schritt() sonst 
+      wenn IstMarke(blau) dann 
+        wenn cond__true dann
+          wiederhole 2 mal
+            Schritt()
+          endeWiederhole
+        sonst
+          wenn IstMarke(gelb) dann
+            wenn cond__true dann
+              wenn IstZiegel(12) dann
+                wenn cond__true dann
+                  MarkeSetzen(rot)
+                sonst
+                  wenn cond__true dann
+                    wenn cond__true dann
+                      Schritt()
+                    sonst
+                    endeWenn
+                  sonst
+                  endeWenn
+                endeWenn
+              sonst
+                wenn cond__true dann
+                  wenn cond__true dann
+                    Schritt()
+                  sonst
+                  endeWenn
+                sonst
+                endeWenn
+              endeWenn
+            sonst
+              wenn cond__true dann
+                wenn cond__true dann
+                  wenn istWand() dann
+                    wiederhole immer Schritt()
+                    endeWiederhole
+                  sonst
+                  endeWenn
+                sonst
+                endeWenn
+              sonst
+              endeWenn
+            endeWenn
+          sonst
+            wenn cond__true dann
+              wenn cond__true dann
+                wenn istWand() dann
+                  wiederhole immer Schritt()
+                  endeWiederhole
+                sonst
+                endeWenn
+              sonst
+              endeWenn
+            sonst
+            endeWenn
+          endeWenn
+        endeWenn
+      sonst
+        wenn IstMarke(gelb) dann
+          wenn cond__true dann
+            wenn IstZiegel(12) dann
+              wenn cond__true dann
+                MarkeSetzen(rot)
+              sonst
+                wenn cond__true dann
+                  wenn cond__true dann
+                    Schritt()
+                  sonst
+                  endeWenn
+                sonst
+                endeWenn
+              endeWenn
+            sonst
+              wenn cond__true dann
+                wenn cond__true dann
+                  Schritt()
+                sonst
+                endeWenn
+              sonst
+              endeWenn
+            endeWenn
+          sonst
+            wenn cond__true dann
+              wenn cond__true dann
+                wenn istWand() dann
+                  wiederhole immer Schritt()
+                  endeWiederhole
+                sonst
+                endeWenn
+              sonst
+              endeWenn
+            sonst
+            endeWenn
+          endeWenn
+        sonst
+          wenn cond__true dann
+            wenn cond__true dann
+              wenn istWand() dann
+                wiederhole immer Schritt()
+                endeWiederhole
+              sonst
+              endeWenn
+            sonst
+            endeWenn
+          sonst
+          endeWenn
+        endeWenn
+      endeWenn
+    endeWenn
+  sonst
+    wenn IstMarke(blau) dann
+      wenn cond__true dann
+        wiederhole 2 mal 
+          Schritt() 
+        endeWiederhole 
+      sonst 
+        wenn IstMarke(gelb) dann 
+          wenn cond__true dann 
+            wenn IstZiegel(12) dann 
+              wenn cond__true dann 
+                MarkeSetzen(rot) 
+              sonst 
+                wenn cond__true dann 
+                  wenn cond__true dann 
+                    Schritt() 
+                  sonst 
+                  endeWenn 
+                sonst 
+                endeWenn 
+              endeWenn 
+            sonst 
+              wenn cond__true dann 
+                wenn cond__true dann 
+                  Schritt() 
+                sonst 
+                endeWenn 
+              sonst 
+              endeWenn 
+            endeWenn 
+          sonst 
+            wenn cond__true dann 
+              wenn cond__true dann 
+                wenn istWand() dann 
+                  wiederhole immer Schritt() 
+                  endeWiederhole 
+                sonst 
+                endeWenn 
+              sonst 
+              endeWenn 
+            sonst 
+            endeWenn 
+          endeWenn 
+        sonst 
+          wenn cond__true dann 
+            wenn cond__true dann 
+              wenn istWand() dann 
+                wiederhole immer Schritt() 
+                endeWiederhole 
+              sonst 
+              endeWenn 
+            sonst 
+            endeWenn 
+          sonst 
+          endeWenn 
+        endeWenn 
+      endeWenn 
+    sonst 
+      wenn IstMarke(gelb) dann 
+        wenn cond__true dann 
+          wenn IstZiegel(12) dann 
+            wenn cond__true dann 
+              MarkeSetzen(rot) 
+            sonst 
+              wenn cond__true dann 
+                wenn cond__true dann 
+                  Schritt() 
+                sonst 
+                endeWenn 
+              sonst 
+              endeWenn 
+            endeWenn 
+          sonst 
+            wenn cond__true dann 
+              wenn cond__true dann 
+                Schritt() 
+              sonst 
+              endeWenn 
+            sonst 
+            endeWenn 
+          endeWenn 
+        sonst 
+          wenn cond__true dann 
+            wenn cond__true dann 
+              wenn istWand() dann 
+                wiederhole immer Schritt() 
+                endeWiederhole 
+              sonst 
+              endeWenn 
+            sonst 
+            endeWenn 
+          sonst 
+          endeWenn 
+        endeWenn 
+      sonst 
+        wenn cond__true dann 
+          wenn cond__true dann 
+            wenn istWand() dann 
+              wiederhole immer Schritt() 
+              endeWiederhole 
+            sonst 
+            endeWenn 
+          sonst 
+          endeWenn 
+        sonst 
+        endeWenn 
+      endeWenn 
+    endeWenn 
   endeWenn 
   
-  schrittRueckwaerts() 
-endebedingung  
-bedingung istGehenErlaubt 
-  schnell 
-    wenn nicht istWand() dann 
-      wenn nicht IstZiegel() dann 
-        wenn nicht istMarkeVorne() dann 
-          wahr 
-        sonst 
-          falsch 
-        endeWenn 
-      sonst 
-        falsch 
-      endeWenn 
-    sonst 
-      falsch 
-    endeWenn 
-    
-  langsam 
-endebedingung  
-bedingung istZiel 
-  schnell 
-    wenn cond__false dann 
-      wahr 
-    sonst 
-      falsch 
-    endeWenn 
-    
-    wiederhole 4 mal 
-      wenn IstZiegel(1) dann 
-        wenn cond__true dann 
-          wahr 
-        sonst 
-          falsch 
-        endeWenn 
-        
-      sonst 
-      endeWenn 
-      
-      LinksDrehen() 
-    endeWiederhole 
-  langsam 
-endebedingung  
-bedingung cond__f3b78ab34bf945bc8b8c7c2c5aea388d 
-  wenn nicht IstZiegel(1) dann 
-    wahr 
-  sonst 
-    falsch 
-  endeWenn 
-endeBedingung 
-anweisung zweigGehen 
-  MarkeSetzen() 
-  wiederhole 4 mal 
-    wenn istGehenErlaubt() dann 
-      Schritt() 
-      schnell 
-        zweigGehen() 
-        wenn istZiel() dann 
-          Warten(2500) 
-          Ton() 
-          wiederhole solange cond__f3b78ab34bf945bc8b8c7c2c5aea388d 
-            LinksDrehen() 
+  wenn istWand() dann 
+    wenn IstMarke() dann 
+      Schritt() sonst 
+      wenn cond__true dann 
+        wenn istWand() dann 
+          wiederhole 2 mal 
+            Schritt() 
           endeWiederhole 
-          Schritt() 
-          langsam 
-            Beenden() 
-          schnell 
         sonst 
-          schrittRueckwaerts() 
-          
+          wenn cond__true dann 
+            Schritt() sonst 
+          endeWenn 
         endeWenn 
-        
-      langsam 
+      sonst 
+      endeWenn 
+    endeWenn 
+  sonst 
+    wenn cond__true dann 
+      wenn istWand() dann 
+        wiederhole 2 mal 
+          Schritt() 
+        endeWiederhole 
+      sonst 
+        wenn cond__true dann 
+          Schritt() sonst 
+        endeWenn 
+      endeWenn 
     sonst 
     endeWenn 
-    
-    schnell 
-      LinksDrehen() 
-    langsam 
-  endeWiederhole 
-endeanweisung  
-programm  
-  schnell 
-    zweigGehen() 
-    wiederhole 2 mal 
-      Ton() 
-      Warten(2000) 
-    endeWiederhole 
-  langsam 
+  endeWenn 
+  
 endeprogramm  

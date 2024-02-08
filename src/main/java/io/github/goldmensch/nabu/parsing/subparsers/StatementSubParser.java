@@ -135,7 +135,8 @@ public class StatementSubParser extends SubParser<Statement> {
         consume(TokenType.LEFT_BRACE);
 
         var arguments = new ArrayList<Token>();
-        var statements = new ArrayList<Statement.Block>();
+        var statements = new ArrayList<Statement>();
+        var withExpressions = new ArrayList<Expression>();
         do {
             switch (advance().type()) {
                 case UNDERSCORE, NUMBER, RED, GREEN, YELLOW, BLUE -> arguments.add(previous());
@@ -143,11 +144,16 @@ public class StatementSubParser extends SubParser<Statement> {
                         throw expectedError(TokenType.UNDERSCORE, TokenType.NUMBER, TokenType.RED, TokenType.GREEN, TokenType.YELLOW, TokenType.BLUE);
             }
 
+            var expr = match(TokenType.WITH)
+                    ? expression()
+                    : new Expression.DefaultTryArm(previous().line());
+            withExpressions.add(expr);
+
             consume(TokenType.ARROW);
 
-            statements.add(block());
+            statements.add(statement());
         } while (!match(TokenType.RIGHT_BRACE));
-        return new Statement.Test(condCallIdentifier, arguments, statements, new Position(token));
+        return new Statement.Test(condCallIdentifier, arguments, statements, withExpressions, new Position(token));
     }
 
     private Statement tryStmt() {
@@ -155,7 +161,7 @@ public class StatementSubParser extends SubParser<Statement> {
 
         consume(TokenType.LEFT_BRACE);
         var conditions = new ArrayList<Expression>();
-        var statements = new ArrayList<Statement.Block>();
+        var statements = new ArrayList<Statement>();
         do {
             if (match(TokenType.UNDERSCORE)) {
                 conditions.add(new Expression.DefaultTryArm(previous().line()));
@@ -163,7 +169,7 @@ public class StatementSubParser extends SubParser<Statement> {
                 conditions.add(expression());
             }
             consume(TokenType.ARROW);
-            statements.add(block());
+            statements.add(statement());
         } while (!match(TokenType.RIGHT_BRACE));
         return new Statement.Try(conditions, statements, new Position(token));
     }

@@ -76,18 +76,18 @@ public sealed interface Statement extends Node permits Statement.Block, Statemen
         }
     }
 
-    record Test(String condCallIdentifier, List<Token> arguments, List<Block> statements,
+    record Test(String condCallIdentifier, List<Token> arguments, List<Statement> statements, List<Expression> withExpressions,
                 Position position) implements Statement {
         @Override
         public <T> void traverse(T context, BiFunction<Node, T, Boolean> function) {
             if (function.apply(this, context)) return;
-            for (Block statement : statements) {
+            for (Statement statement : statements) {
                 statement.traverse(context, function);
             }
         }
     }
 
-    record Try(List<Expression> conditions, List<Block> statements, Position position) implements Statement {
+    record Try(List<Expression> conditions, List<Statement> statements, Position position) implements Statement {
 
         @Override
         public <T> void traverse(T context, BiFunction<Node, T, Boolean> function) {
@@ -95,7 +95,7 @@ public sealed interface Statement extends Node permits Statement.Block, Statemen
             for (Expression condition : conditions) {
                 condition.traverse(context, function);
             }
-            for (Block statement : statements) {
+            for (Statement statement : statements) {
                 statement.traverse(context, function);
             }
         }
