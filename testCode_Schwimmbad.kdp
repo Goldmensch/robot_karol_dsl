@@ -1,0 +1,104 @@
+bedingung cond__true wahr endeBedingung
+bedingung cond__false falsch endeBedingung
+bedingung cond__07d80a66267146848926691e54fa0878 
+  wenn nicht istWand() dann 
+    wahr 
+  sonst 
+    falsch 
+  endeWenn 
+endeBedingung 
+anweisung baueBecken 
+  schnell 
+    wiederhole 12 mal 
+      wiederhole solange cond__07d80a66267146848926691e54fa0878 
+        Hinlegen() 
+        Schritt() 
+      endeWiederhole 
+      LinksDrehen() 
+    endeWiederhole 
+  langsam 
+endeanweisung  
+bedingung cond__29159595187c4155a6ec625fc92873b9 
+  wenn nicht istWand() dann 
+    wahr 
+  sonst 
+    falsch 
+  endeWenn 
+endeBedingung 
+anweisung abbauenBecken 
+  schnell 
+    wiederhole 12 mal 
+      wiederhole solange cond__29159595187c4155a6ec625fc92873b9 
+        Aufheben() 
+        Schritt() 
+      endeWiederhole 
+      RechtsDrehen() 
+    endeWiederhole 
+  langsam 
+endeanweisung  
+anweisung umdrehen 
+  LinksDrehen() 
+  LinksDrehen() 
+endeanweisung  
+bedingung cond__a4c9d68836604a0ca3755136a4753ab1 
+  wenn nicht IstZiegel() dann 
+    wahr 
+  sonst 
+    falsch 
+  endeWenn 
+endeBedingung 
+anweisung schwimmen 
+  wiederhole 3 mal 
+    Hinlegen() 
+  endeWiederhole 
+  Schritt() 
+  wiederhole solange cond__a4c9d68836604a0ca3755136a4753ab1 
+    wiederhole 3 mal 
+      Hinlegen() 
+    endeWiederhole 
+    Schritt() 
+    umdrehen() 
+    wiederhole 3 mal 
+      Aufheben() 
+    endeWiederhole 
+    umdrehen() 
+  endeWiederhole 
+  Schritt() 
+  umdrehen() 
+  wiederhole 3 mal 
+    Aufheben() 
+  endeWiederhole 
+  umdrehen() 
+endeanweisung  
+bedingung cond__d623d5866b8c499cbf7fbe30200cc27e 
+  wenn nicht istWand() dann 
+    wahr 
+  sonst 
+    falsch 
+  endeWenn 
+endeBedingung 
+anweisung hauptteil 
+  baueBecken() 
+  LinksDrehen() 
+  wiederhole 2 mal 
+    Schritt() 
+  endeWiederhole 
+  RechtsDrehen() 
+  schwimmen() 
+  RechtsDrehen() 
+  wiederhole 2 mal 
+    Schritt() 
+  endeWiederhole 
+  RechtsDrehen() 
+  abbauenBecken() 
+  wiederhole solange cond__d623d5866b8c499cbf7fbe30200cc27e 
+    Schritt() 
+  endeWiederhole 
+  LinksDrehen() 
+  LinksDrehen() 
+endeanweisung  
+programm  
+  wiederhole 4 mal 
+    hauptteil() 
+  endeWiederhole 
+endeprogramm  

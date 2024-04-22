@@ -23,7 +23,7 @@ java {
 tasks.jar {
     manifest {
         attributes(
-                "Main-Class" to "io.github.goldmensch.compiler.Compiler"
+                "Main-Class" to "io.github.goldmensch.nabu.Compiler"
         )
     }
 }

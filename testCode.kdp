@@ -1,134 +1,213 @@
 bedingung cond__true wahr endeBedingung
 bedingung cond__false falsch endeBedingung
 programm  
-  wenn IstMarke(rot) dann 
-    wenn cond__true dann 
-      Schritt() sonst 
-      wenn IstMarke(blau) dann 
-        wenn cond__true dann
-          wiederhole 2 mal
-            Schritt()
-          endeWiederhole
-        sonst
-          wenn IstMarke(gelb) dann
-            wenn cond__true dann
-              wenn IstZiegel(12) dann
-                wenn cond__true dann
-                  MarkeSetzen(rot)
-                sonst
-                  wenn cond__true dann
-                    wenn cond__true dann
-                      Schritt()
-                    sonst
-                    endeWenn
-                  sonst
-                  endeWenn
-                endeWenn
-              sonst
-                wenn cond__true dann
-                  wenn cond__true dann
-                    Schritt()
-                  sonst
-                  endeWenn
-                sonst
-                endeWenn
-              endeWenn
-            sonst
-              wenn cond__true dann
-                wenn cond__true dann
-                  wenn istWand() dann
-                    wiederhole immer Schritt()
-                    endeWiederhole
-                  sonst
-                  endeWenn
-                sonst
-                endeWenn
-              sonst
-              endeWenn
-            endeWenn
-          sonst
-            wenn cond__true dann
-              wenn cond__true dann
-                wenn istWand() dann
-                  wiederhole immer Schritt()
-                  endeWiederhole
-                sonst
-                endeWenn
-              sonst
-              endeWenn
-            sonst
-            endeWenn
-          endeWenn
-        endeWenn
-      sonst
-        wenn IstMarke(gelb) dann
-          wenn cond__true dann
-            wenn IstZiegel(12) dann
-              wenn cond__true dann
-                MarkeSetzen(rot)
-              sonst
-                wenn cond__true dann
-                  wenn cond__true dann
-                    Schritt()
-                  sonst
-                  endeWenn
-                sonst
-                endeWenn
-              endeWenn
-            sonst
-              wenn cond__true dann
-                wenn cond__true dann
-                  Schritt()
-                sonst
-                endeWenn
-              sonst
-              endeWenn
-            endeWenn
-          sonst
-            wenn cond__true dann
-              wenn cond__true dann
-                wenn istWand() dann
-                  wiederhole immer Schritt()
-                  endeWiederhole
-                sonst
-                endeWenn
-              sonst
-              endeWenn
-            sonst
-            endeWenn
-          endeWenn
-        sonst
-          wenn cond__true dann
-            wenn cond__true dann
-              wenn istWand() dann
-                wiederhole immer Schritt()
-                endeWiederhole
-              sonst
-              endeWenn
-            sonst
-            endeWenn
-          sonst
-          endeWenn
-        endeWenn
-      endeWenn
-    endeWenn
-  sonst
-    wenn IstMarke(blau) dann
-      wenn cond__true dann
-        wiederhole 2 mal 
-          Schritt() 
-        endeWiederhole 
-      sonst 
-        wenn IstMarke(gelb) dann 
-          wenn cond__true dann 
-            wenn IstZiegel(12) dann 
+  LinksDrehen() 
+  wiederhole immer wenn istWand() dann 
+    schnell 
+      wiederhole 2 mal 
+        RechtsDrehen() 
+      endeWiederhole 
+      wenn IstMarke(gelb) dann 
+        wenn cond__true dann 
+          MarkeLöschen() 
+          MarkeSetzen(blau) 
+        sonst 
+          wenn IstMarke(blau) dann 
+            wenn cond__true dann 
+              MarkeLöschen() 
+              MarkeSetzen(rot) 
+            sonst 
+              wenn IstMarke(rot) dann 
+                wenn cond__true dann 
+                  MarkeLöschen() 
+                  MarkeSetzen(grün) 
+                sonst 
+                  wenn IstMarke(grün) dann 
+                    wenn cond__true dann 
+                      MarkeLöschen() 
+                      MarkeSetzen(gelb) 
+                    sonst 
+                      wenn cond__true dann 
+                        wenn cond__true dann 
+                          MarkeSetzen(gelb) sonst 
+                        endeWenn 
+                      sonst 
+                      endeWenn 
+                    endeWenn 
+                  sonst 
+                    wenn cond__true dann 
+                      wenn cond__true dann 
+                        MarkeSetzen(gelb) sonst 
+                      endeWenn 
+                    sonst 
+                    endeWenn 
+                  endeWenn 
+                endeWenn 
+              sonst 
+                wenn IstMarke(grün) dann 
+                  wenn cond__true dann 
+                    MarkeLöschen() 
+                    MarkeSetzen(gelb) 
+                  sonst 
+                    wenn cond__true dann 
+                      wenn cond__true dann 
+                        MarkeSetzen(gelb) sonst 
+                      endeWenn 
+                    sonst 
+                    endeWenn 
+                  endeWenn 
+                sonst 
+                  wenn cond__true dann 
+                    wenn cond__true dann 
+                      MarkeSetzen(gelb) sonst 
+                    endeWenn 
+                  sonst 
+                  endeWenn 
+                endeWenn 
+              endeWenn 
+            endeWenn 
+          sonst 
+            wenn IstMarke(rot) dann 
               wenn cond__true dann 
-                MarkeSetzen(rot) 
+                MarkeLöschen() 
+                MarkeSetzen(grün) 
+              sonst 
+                wenn IstMarke(grün) dann 
+                  wenn cond__true dann 
+                    MarkeLöschen() 
+                    MarkeSetzen(gelb) 
+                  sonst 
+                    wenn cond__true dann 
+                      wenn cond__true dann 
+                        MarkeSetzen(gelb) sonst 
+                      endeWenn 
+                    sonst 
+                    endeWenn 
+                  endeWenn 
+                sonst 
+                  wenn cond__true dann 
+                    wenn cond__true dann 
+                      MarkeSetzen(gelb) sonst 
+                    endeWenn 
+                  sonst 
+                  endeWenn 
+                endeWenn 
+              endeWenn 
+            sonst 
+              wenn IstMarke(grün) dann 
+                wenn cond__true dann 
+                  MarkeLöschen() 
+                  MarkeSetzen(gelb) 
+                sonst 
+                  wenn cond__true dann 
+                    wenn cond__true dann 
+                      MarkeSetzen(gelb) sonst 
+                    endeWenn 
+                  sonst 
+                  endeWenn 
+                endeWenn 
               sonst 
                 wenn cond__true dann 
                   wenn cond__true dann 
-                    Schritt() 
+                    MarkeSetzen(gelb) sonst 
+                  endeWenn 
+                sonst 
+                endeWenn 
+              endeWenn 
+            endeWenn 
+          endeWenn 
+        endeWenn 
+      sonst 
+        wenn IstMarke(blau) dann 
+          wenn cond__true dann 
+            MarkeLöschen() 
+            MarkeSetzen(rot) 
+          sonst 
+            wenn IstMarke(rot) dann 
+              wenn cond__true dann 
+                MarkeLöschen() 
+                MarkeSetzen(grün) 
+              sonst 
+                wenn IstMarke(grün) dann 
+                  wenn cond__true dann 
+                    MarkeLöschen() 
+                    MarkeSetzen(gelb) 
                   sonst 
+                    wenn cond__true dann 
+                      wenn cond__true dann 
+                        MarkeSetzen(gelb) sonst 
+                      endeWenn 
+                    sonst 
+                    endeWenn 
+                  endeWenn 
+                sonst 
+                  wenn cond__true dann 
+                    wenn cond__true dann 
+                      MarkeSetzen(gelb) sonst 
+                    endeWenn 
+                  sonst 
+                  endeWenn 
+                endeWenn 
+              endeWenn 
+            sonst 
+              wenn IstMarke(grün) dann 
+                wenn cond__true dann 
+                  MarkeLöschen() 
+                  MarkeSetzen(gelb) 
+                sonst 
+                  wenn cond__true dann 
+                    wenn cond__true dann 
+                      MarkeSetzen(gelb) sonst 
+                    endeWenn 
+                  sonst 
+                  endeWenn 
+                endeWenn 
+              sonst 
+                wenn cond__true dann 
+                  wenn cond__true dann 
+                    MarkeSetzen(gelb) sonst 
+                  endeWenn 
+                sonst 
+                endeWenn 
+              endeWenn 
+            endeWenn 
+          endeWenn 
+        sonst 
+          wenn IstMarke(rot) dann 
+            wenn cond__true dann 
+              MarkeLöschen() 
+              MarkeSetzen(grün) 
+            sonst 
+              wenn IstMarke(grün) dann 
+                wenn cond__true dann 
+                  MarkeLöschen() 
+                  MarkeSetzen(gelb) 
+                sonst 
+                  wenn cond__true dann 
+                    wenn cond__true dann 
+                      MarkeSetzen(gelb) sonst 
+                    endeWenn 
+                  sonst 
+                  endeWenn 
+                endeWenn 
+              sonst 
+                wenn cond__true dann 
+                  wenn cond__true dann 
+                    MarkeSetzen(gelb) sonst 
+                  endeWenn 
+                sonst 
+                endeWenn 
+              endeWenn 
+            endeWenn 
+          sonst 
+            wenn IstMarke(grün) dann 
+              wenn cond__true dann 
+                MarkeLöschen() 
+                MarkeSetzen(gelb) 
+              sonst 
+                wenn cond__true dann 
+                  wenn cond__true dann 
+                    MarkeSetzen(gelb) sonst 
                   endeWenn 
                 sonst 
                 endeWenn 
@@ -136,121 +215,19 @@ programm
             sonst 
               wenn cond__true dann 
                 wenn cond__true dann 
-                  Schritt() 
-                sonst 
+                  MarkeSetzen(gelb) sonst 
                 endeWenn 
               sonst 
               endeWenn 
             endeWenn 
-          sonst 
-            wenn cond__true dann 
-              wenn cond__true dann 
-                wenn istWand() dann 
-                  wiederhole immer Schritt() 
-                  endeWiederhole 
-                sonst 
-                endeWenn 
-              sonst 
-              endeWenn 
-            sonst 
-            endeWenn 
-          endeWenn 
-        sonst 
-          wenn cond__true dann 
-            wenn cond__true dann 
-              wenn istWand() dann 
-                wiederhole immer Schritt() 
-                endeWiederhole 
-              sonst 
-              endeWenn 
-            sonst 
-            endeWenn 
-          sonst 
           endeWenn 
         endeWenn 
       endeWenn 
-    sonst 
-      wenn IstMarke(gelb) dann 
-        wenn cond__true dann 
-          wenn IstZiegel(12) dann 
-            wenn cond__true dann 
-              MarkeSetzen(rot) 
-            sonst 
-              wenn cond__true dann 
-                wenn cond__true dann 
-                  Schritt() 
-                sonst 
-                endeWenn 
-              sonst 
-              endeWenn 
-            endeWenn 
-          sonst 
-            wenn cond__true dann 
-              wenn cond__true dann 
-                Schritt() 
-              sonst 
-              endeWenn 
-            sonst 
-            endeWenn 
-          endeWenn 
-        sonst 
-          wenn cond__true dann 
-            wenn cond__true dann 
-              wenn istWand() dann 
-                wiederhole immer Schritt() 
-                endeWiederhole 
-              sonst 
-              endeWenn 
-            sonst 
-            endeWenn 
-          sonst 
-          endeWenn 
-        endeWenn 
-      sonst 
-        wenn cond__true dann 
-          wenn cond__true dann 
-            wenn istWand() dann 
-              wiederhole immer Schritt() 
-              endeWiederhole 
-            sonst 
-            endeWenn 
-          sonst 
-          endeWenn 
-        sonst 
-        endeWenn 
-      endeWenn 
-    endeWenn 
-  endeWenn 
-  
-  wenn istWand() dann 
-    wenn IstMarke() dann 
-      Schritt() sonst 
-      wenn cond__true dann 
-        wenn istWand() dann 
-          wiederhole 2 mal 
-            Schritt() 
-          endeWiederhole 
-        sonst 
-          wenn cond__true dann 
-            Schritt() sonst 
-          endeWenn 
-        endeWenn 
-      sonst 
-      endeWenn 
-    endeWenn 
+      
+    langsam 
   sonst 
-    wenn cond__true dann 
-      wenn istWand() dann 
-        wiederhole 2 mal 
-          Schritt() 
-        endeWiederhole 
-      sonst 
-        wenn cond__true dann 
-          Schritt() sonst 
-        endeWenn 
-      endeWenn 
-    sonst 
-    endeWenn 
   endeWenn 
   
+  Schritt() 
+  endeWiederhole 
 endeprogramm  

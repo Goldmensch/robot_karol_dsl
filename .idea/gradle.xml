@@ -4,9 +4,7 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="/nix/store/hf75f6pil7vcqz8ml5140840warfc7b3-gradle-8.5/lib/gradle" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>

@@ -1,23 +1,19 @@
+// yellow, blue, red, green
 main {
-    test isMark(x) {
-        red with true -> step()
-        blue with isWall() -> {
-            2 times { step() }
+    turnLeft()
+    loop {
+        if isWall() {
+            fast {
+                2 times { turnRight() }
+            test isMark(x) {
+                yellow -> { deleteMark() setMark(blue) }
+                blue -> { deleteMark() setMark(red) }
+                red -> { deleteMark() setMark(green) }
+                green -> { deleteMark() setMark(yellow) }
+                _ -> setMark(yellow)
+            }
+            }
         }
-        yellow -> test isBrick(x) {
-            12 -> { setMark(red) }
-            _ -> { step() }
-        }
-        _ -> if isWall() {
-            loop { step() }
-        }
-    }
-
-    try {
-        isWall() & isMark() -> step()
-        _ -> try {
-            isWall() -> { 2 times { step() }}
-            _ -> step()
-        }
+        step()
     }
 }

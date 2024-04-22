@@ -21,23 +21,25 @@ public class CannotCallUnknownMethod implements SemanticRule {
                 .toList();
 
         head.traverse(null, (node, o) -> {
+            if (node instanceof AstRoot) return false;
             var methodName = validator.methodName(node);
             if (methodName == null) return true;
-
-
-            if (node instanceof Expression.CondCall condCall) {
-                String identifier = condCall.identifier();
-                if (!RobotKarolUtils.isPredefinedCondition(condCall) && !isDefinedBefore(condCall.identifier(), methodName, methods)) {
-                    validator.error(node, "Unknown condition called %s(%s)", identifier, formatArg(condCall.argument()));
+            node.traverse(null, (node1, __) -> {
+                if (node1 instanceof Expression.CondCall condCall) {
+                    String identifier = condCall.identifier();
+                    if (!RobotKarolUtils.isPredefinedCondition(condCall) && !isDefinedBefore(condCall.identifier(), methodName, methods)) {
+                        validator.error(node, "Unknown condition called %s(%s)", identifier, formatArg(condCall.argument()));
+                    }
                 }
-            }
 
-            if (node instanceof Statement.FuncCall funcCall) {
-                String identifier = funcCall.identifier();
-                if (!RobotKarolUtils.isPredefinedFunction(funcCall) && !isDefinedBefore(funcCall.identifier(), methodName, methods)) {
-                    validator.error(node, "Unknown function called %s(%s)", identifier, formatArg(funcCall.argument()));
+                if (node1 instanceof Statement.FuncCall funcCall) {
+                    String identifier = funcCall.identifier();
+                    if (!RobotKarolUtils.isPredefinedFunction(funcCall) && !isDefinedBefore(funcCall.identifier(), methodName, methods)) {
+                        validator.error(node, "Unknown function called %s(%s)", identifier, formatArg(funcCall.argument()));
+                    }
                 }
-            }
+                return false;
+            });
             return false;
         });
     }
